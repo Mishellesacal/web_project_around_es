@@ -1,182 +1,156 @@
+
 import { FormValidator } from "./formValidator.js";
 import { Card } from "./card.js";
-import { openModal, closeModal, handleEscClose } from "./utils.js";
+import { PopupWithImage } from "./PopupWithImage.js";
+import { PopupWithForm } from "./PopupWithForm.js";
+import { Section } from "./Section.js";
+import { UserInfo } from "./UserInfo.js";
 
+const initialCards = [
+  {
+    name: "Valle de Yosemite",
+    link: "https://practicum-content.s3.us-west-1.amazonaws.com/web-code/moved_yosemite.jpg"
+  },
+  {
+    name: "Lago Louise",
+    link: "https://practicum-content.s3.us-west-1.amazonaws.com/web-code/moved_lake-louise.jpg"
+  },
+  {
+    name: "Montañas Calvas",
+    link: "https://practicum-content.s3.us-west-1.amazonaws.com/web-code/moved_bald-mountains.jpg"
+  },
+  {
+    name: "Latemar",
+    link: "https://practicum-content.s3.us-west-1.amazonaws.com/web-code/moved_latemar.jpg"
+  },
+  {
+    name: "Parque Nacional de la Vanoise",
+    link: "https://practicum-content.s3.us-west-1.amazonaws.com/web-code/moved_vanoise.jpg"
+  },
+  {
+    name: "Lago di Braies",
+    link: "https://practicum-content.s3.us-west-1.amazonaws.com/web-code/moved_lago.jpg"
+  }
+];
 
-const initialCards = [{
-  name: "Valle de Yosemite",
-  link: "https://practicum-content.s3.us-west-1.amazonaws.com/web-code/moved_yosemite.jpg"
-},
-{
-  name: "Lago Louise",
-  link: "https://practicum-content.s3.us-west-1.amazonaws.com/web-code/moved_lake-louise.jpg"
-},
-{
-  name: "Montañas Calvas",
-  link: "https://practicum-content.s3.us-west-1.amazonaws.com/web-code/moved_bald-mountains.jpg"
-},
-{
-  name: "Latemar",
-  link: "https://practicum-content.s3.us-west-1.amazonaws.com/web-code/moved_latemar.jpg",
-},
-{
-  name: "Parque Nacional de la Vanoise",
-  link: "https://practicum-content.s3.us-west-1.amazonaws.com/web-code/moved_vanoise.jpg",
-},
-{
-  name: "Lago di Braies",
-  link: "https://practicum-content.s3.us-west-1.amazonaws.com/web-code/moved_lago.jpg",
-}];
-
-
+// Elementos del HTML
 const editButton = document.querySelector(".profile__edit-button");
-const editPopup = document.querySelector("#edit-popup");
-const CloseButton = editPopup.querySelector(".popup__close");
-
-
-editButton.addEventListener("click", () => {
-  handleOpenEditModal();
-});
-
-CloseButton.addEventListener("click", () => {
-  closeModal(editPopup);
-});
-
-const profileTitle = document.querySelector(".profile__title");
-const profileJob = document.querySelector(".profile__description");
-const nameInput = document.querySelector(".popup__input_type_name");
-const jobInput = document.querySelector(".popup__input_type_description");
-const formElement = document.querySelector("#edit-profile-form");
-
-
-function fillProfileForm() {
-  nameInput.value = profileTitle.textContent;
-  jobInput.value = profileJob.textContent;
-};
-
-function handleOpenEditModal() {
-  fillProfileForm();
-  openModal(editPopup);
-};
-
-
-function handleProfileFormSubmit(evt) {
-  evt.preventDefault();
-
-  profileTitle.textContent = nameInput.value;
-  profileJob.textContent = jobInput.value;
-  closeModal(editPopup);
-
-};
-formElement.addEventListener("submit", handleProfileFormSubmit);
-
-function handleImageClick(data) {
-  popupImage.src = data.link;
-  popupImage.alt = data.name;
-  popupCaption.textContent = data.name;
-
-  openModal(imagePopup);
-}
-;
-
-
-
-const allPopups = document.querySelectorAll(".popup");
-
-allPopups.forEach((popup) => {
-  popup.addEventListener("mousedown", (evt) => {
-    if (evt.target === popup) {
-      closeModal(popup);
-    }
-  });
-});
-
-const cardsList = document.querySelector(".cards__list");
-
-
 const addButton = document.querySelector(".profile__add-button");
-const newCardPopup = document.querySelector("#new-card-popup");
-const newCardCloseButton = newCardPopup.querySelector(".popup__close");
+
+const formElement = document.querySelector("#edit-profile-form");
 const newCardForm = document.querySelector("#new-card-form");
-const newCardInputs = newCardForm.querySelectorAll(".popup__input");
-const profileInputs = formElement.querySelectorAll(".popup__input");
-console.log(profileInputs);
 
-
-
-
-const getCardElement = (data) => {
-
-
-  const cardTemplate = document.querySelector("#card-template").content;
-  const cardElement = cardTemplate.querySelector(".card").cloneNode(true);
-  const cardTitle = cardElement.querySelector(".card__title");
-  const cardImage = cardElement.querySelector(".card__image");
-  const likeButton = cardElement.querySelector(".card__like-button");
-
-  cardTitle.textContent = data.name || "sin titulo";
-  cardImage.src = data.link || "./images/placeholder.jpg";
-  cardImage.alt = data.name;
-  const deleteButton = cardElement.querySelector(".card__delete-button");
-  likeButton.addEventListener("click", handleLikeClick);
-  deleteButton.addEventListener("click", handleDeleteClick);
-
-  cardImage.addEventListener("click", () => {
-    handleImageClick(data);
-  });
-  return cardElement;
-};
-
-const handleLikeClick = (evt) => {
-  evt.target.classList.toggle("card__like-button_is-active");
-}
-const handleDeleteClick = (evt) => {
-  const card = evt.target.closest(".card");
-  card.remove();
-}
-
-
-const renderCard = (data, wrap) => {
-  wrap.prepend(getCardElement(data));
-};
-
-
-function handleCardFormSubmit(evt) {
-  evt.preventDefault();
-
-  renderCard({name: titleInput.value, link: linkInput.value}, cardsList);
-
-  closeModal(document.querySelector("#new-card-popup"));
-  newCardForm.reset();
-}
-
-newCardForm.addEventListener("submit", handleCardFormSubmit);
-
-const submitButton = newCardForm.querySelector(".popup__button");
-const submitGuardar = formElement.querySelector(".popup__button");
-const inputs = document.querySelectorAll(".popup__input");
+const nameInput = formElement.querySelector(".popup__input_type_name");
+const jobInput = formElement.querySelector(".popup__input_type_description");
 
 const titleInput = newCardForm.querySelector(".popup__input_type_card-name");
 const linkInput = newCardForm.querySelector(".popup__input_type_url");
 
+// Información del perfil
+const userInfo = new UserInfo({
+  nameSelector: ".profile__title",
+  jobSelector: ".profile__description"
+});
 
+// Ventana de imagen
+const imagePopup = new PopupWithImage("#image-popup");
 
+// Función para guardar los cambios del perfil
+function handleProfileFormSubmit(inputValues) {
+  userInfo.setUserInfo({
+    name: inputValues[nameInput.name],
+    description: inputValues[jobInput.name]
+  });
+
+  editPopup.close();
+}
+
+// Ventana de edición del perfil
+const editPopup = new PopupWithForm(
+  handleProfileFormSubmit,
+  "#edit-popup"
+);
+
+// Función para crear una tarjeta nueva
+function handleAddCardSubmit(inputValues) {
+  const cardData = {
+    name: inputValues[titleInput.name],
+    link: inputValues[linkInput.name]
+  };
+
+  const card = new Card(
+    cardData,
+    "#card-template",
+    (data) => imagePopup.open(data)
+  );
+
+  cardSection.addItem(card.generateCard());
+  addCardPopup.close();
+}
+
+// Ventana para agregar tarjetas
+const addCardPopup = new PopupWithForm(
+  handleAddCardSubmit,
+  "#new-card-popup"
+);
+
+// Sección de tarjetas
+const cardSection = new Section(
+  {
+    items: initialCards,
+    renderer: (item) => {
+      const card = new Card(
+        item,
+        "#card-template",
+        (data) => imagePopup.open(data)
+      );
+
+      cardSection.addItem(card.generateCard());
+    }
+  },
+  ".cards__list"
+);
+
+// Mostrar las tarjetas iniciales
+cardSection.renderItems();
+
+// Activar los eventos de las ventanas
+editPopup.setEventListeners();
+addCardPopup.setEventListeners();
+imagePopup.setEventListeners();
+
+// Abrir el formulario de edición con los datos actuales
+editButton.addEventListener("click", () => {
+  const currentUserInfo = userInfo.getUserInfo();
+
+  nameInput.value = currentUserInfo.name;
+  jobInput.value = currentUserInfo.description;
+
+  editPopup.open();
+});
+
+// Abrir el formulario para agregar tarjetas
 addButton.addEventListener("click", () => {
-  openModal(newCardPopup);
+  addCardPopup.open();
 });
 
-initialCards.forEach((item) => {
-  renderCard({name: item.name, link: item.link}, cardsList);
-});
-
+// Validación de formularios
 const validationConfig = {
   inputSelector: ".popup__input",
   submitButtonSelector: ".popup__button",
   inactiveButtonClass: "form__submit-button_disabled"
 };
 
-const editFormValidator = new FormValidator(validationConfig, formElement);
+const editFormValidator = new FormValidator(
+  validationConfig,
+  formElement
+);
+
 editFormValidator.enableValidation();
 
-const newCardValidator = new FormValidator(validationConfig, newCardForm);
+const newCardValidator = new FormValidator(
+  validationConfig,
+  newCardForm
+);
+
 newCardValidator.enableValidation();
