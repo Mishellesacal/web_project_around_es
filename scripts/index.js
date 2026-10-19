@@ -138,7 +138,9 @@ addButton.addEventListener("click", () => {
 const validationConfig = {
   inputSelector: ".popup__input",
   submitButtonSelector: ".popup__button",
-  inactiveButtonClass: "form__submit-button_disabled"
+  inactiveButtonClass: "form__submit-button_disabled",
+  inputErrorClass: "form_input_type_error",
+  errorClass: "form_input-error_active"
 };
 
 const editFormValidator = new FormValidator(
