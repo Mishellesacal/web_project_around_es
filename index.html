@@ -7,6 +7,23 @@
     <title>Around The U.S.</title>
     <link href="./pages/index.css" rel="stylesheet" />
   </head>
+  <div class="popup" id="delete-popup">
+  <div class="popup__container">
+    <button
+      type="button"
+      class="popup__close"
+      aria-label="Cerrar"
+    ></button>
+
+    <h2 class="popup__title">¿Estás seguro?</h2>
+
+    <form class="popup__form" id="delete-card-form">
+      <button type="submit" class="popup__button">
+        Sí
+      </button>
+    </form>
+  </div>
+</div>
   <body class="page">
     <div class="page__content">
       <header class="header page__section">
@@ -125,129 +142,60 @@
           <p class="popup__caption"></p>
         </div>
       </div>
+
+      <div class="popup" id="avatar-popup">
+        <div class="popup__content">
+          <button
+            aria-label="Cerrar ventana emergente"
+            class="popup__close"
+            type="button"
+          ></button>
+          <h3 class="popup__title">Cambiar foto de perfil</h3>
+          <form class="popup__form" id="avatar-form">
+  <input
+    class="popup__input"
+    name="avatar"
+    id="avatar"
+    placeholder="Enlace a la imagen"
+    type="url"
+    required
+  />
+
+  <span class="avatar-input-error popup__input-error"></span>
+
+  <button class="button popup__button" type="submit">
+    Guardar
+  </button>
+</form>
+        </div>
+      </div>
+  
     </div>
     <template id="card-template">
-<li class="card">
-              <img
-                class="card__image"
-                src="https://practicum-content.s3.us-west-1.amazonaws.com/web-code/moved_yosemite.jpg"
-                alt="Valle de Yosemite"
-              />
-              <button
-                aria-label="Eliminar tarjeta"
-                class="card__delete-button"
-                type="button"
-              ></button>
-              <div class="card__description">
-                <h2 class="card__title">Valle de Yosemite</h2>
-                <button
-                  aria-label="Botón Me gusta"
-                  class="card__like-button"
-                  type="button"
-                ></button>
-              </div>
-            </li>
-            <li class="card">
-              <img
-                class="card__image"
-                src="https://practicum-content.s3.us-west-1.amazonaws.com/web-code/moved_lake-louise.jpg"
-                alt="Lago Louise"
-              />
-              <button
-                aria-label="Eliminar tarjeta"
-                class="card__delete-button"
-                type="button"
-              ></button>
-              <div class="card__description">
-                <h2 class="card__title">Lago Louise</h2>
-                <button
-                  aria-label="Botón Me gusta"
-                  class="card__like-button"
-                  type="button"
-                ></button>
-              </div>
-            </li>
-            <li class="card">
-              <img
-                class="card__image"
-                src="https://practicum-content.s3.us-west-1.amazonaws.com/web-code/moved_bald-mountains.jpg"
-                alt="Montañas Calvas"
-              />
-              <button
-                aria-label="Eliminar tarjeta"
-                class="card__delete-button"
-                type="button"
-              ></button>
-              <div class="card__description">
-                <h2 class="card__title">Montañas Calvas</h2>
-                <button
-                  aria-label="Botón Me gusta"
-                  class="card__like-button"
-                  type="button"
-                ></button>
-              </div>
-            </li>
-            <li class="card">
-              <img
-                class="card__image"
-                src="https://practicum-content.s3.us-west-1.amazonaws.com/web-code/moved_latemar.jpg"
-                alt="Latemar"
-              />
-              <button
-                aria-label="Eliminar tarjeta"
-                class="card__delete-button"
-                type="button"
-              ></button>
-              <div class="card__description">
-                <h2 class="card__title">Latemar</h2>
-                <button
-                  aria-label="Botón Me gusta"
-                  class="card__like-button"
-                  type="button"
-                ></button>
-              </div>
-            </li>
-            <li class="card">
-              <img
-                class="card__image"
-                src="https://practicum-content.s3.us-west-1.amazonaws.com/web-code/moved_vanoise.jpg"
-                alt="Parque Nacional de la Vanoise"
-              />
-              <button
-                aria-label="Eliminar tarjeta"
-                class="card__delete-button"
-                type="button"
-              ></button>
-              <div class="card__description">
-                <h2 class="card__title">Parque Nacional de la Vanoise</h2>
-                <button
-                  aria-label="Botón Me gusta"
-                  class="card__like-button"
-                  type="button"
-                ></button>
-              </div>
-            </li>
-            <li class="card">
-              <img
-                class="card__image"
-                src="https://practicum-content.s3.us-west-1.amazonaws.com/web-code/moved_lago.jpg"
-                alt="Lago di Braies"
-              />
-              <button
-                aria-label="Eliminar tarjeta"
-                class="card__delete-button"
-                type="button"
-              ></button>
-              <div class="card__description">
-                <h2 class="card__title">Lago di Braies</h2>
-                <button
-                  aria-label="Botón Me gusta"
-                  class="card__like-button"
-                  type="button"
-                ></button>
-              </div>
-            </li>
-    </template>
+  <li class="card">
+    <img
+      class="card__image"
+      src=""
+      alt=""
+    />
+
+    <button
+      aria-label="Eliminar tarjeta"
+      class="card__delete-button"
+      type="button"
+    ></button>
+
+    <div class="card__description">
+      <h2 class="card__title"></h2>
+
+      <button
+        aria-label="Botón Me gusta"
+        class="card__like-button"
+        type="button"
+      ></button>
+    </div>
+  </li>
+</template>
     <script defer type="module" src="./scripts/index.js"></script>
   </body>
 </html>
